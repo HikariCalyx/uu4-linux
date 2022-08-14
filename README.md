@@ -16,3 +16,6 @@ We don't recommend you to run it under WSL.
 ```python3 getPermission.py --uu4hash ####```
 
 Result will be returned into variable ```$?``` or ```%ERRORLEVEL%```. If value is 0 then service permission granted, otherwise permission granting fails.
+Following image is an example of service permission granting fails if a wrong uu4hash value is provided.
+
+![photo_2022-07-09_14-08-37](https://user-images.githubusercontent.com/29157608/184521620-31dc9f9e-da6c-4c83-91a0-0b2ff70d2fd3.jpg)
