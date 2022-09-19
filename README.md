@@ -31,15 +31,18 @@ Following image is an example of service permission granting fails if a wrong uu
 
 - Install necessary dependencies (we assume you have ADB / Fastboot binaries installed if you're using AMD64 platform, otherwise install yourself if you haven't)
 ```cd uu4-linux
-sudo bash install.sh```
+sudo bash install.sh
+```
 
 - Boot the phone into Download mode when USB debugging enabled:
 ```adb reboot bootloader
-fastboot devices```
+fastboot devices
+```
 
 If your phone is detected:
 ```cd ~/path/to/auth_utility
-python3 checkOrder.py --uu4hash 1234 --mode check```
+python3 checkOrder.py --uu4hash 1234 --mode check
+```
 
 This will check if your phone has been recorded properly on our website, if yes it will return like this. ```orderStatus``` must be ```processing``` to allow you proceed to bootloader procedure.
 ```{'orderNumber': 'HCT-5555', 'orderStatus': 'processing'}```
@@ -53,7 +56,8 @@ fastboot reboot-bootloader
 python3 getPermission.py --uu4hash 1234
 fastboot oem fih on
 fastboot oem devlock allow_unlock
-fastboot flashing unlock```
+fastboot flashing unlock
+```
 > WARNING: IF YOU ARE USING OTHER MODELS, DO NOT FLASH EXACTLY SAME ABL/XBL FILES!
 
 Then, confirm bootloader unlock on your phone.
