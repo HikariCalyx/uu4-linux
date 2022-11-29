@@ -27,7 +27,7 @@ distro_check() {
         flavor="arch"
     elif [ -f "/usr/bin/zypper" ]; then
         flavor="suse"
-    elif [ -f "/usr/local/bin/brew" ]; then
+    elif [ $(uname) = Darwin ]; then
         flavor="darwin"
     fi
 }
