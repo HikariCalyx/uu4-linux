@@ -106,11 +106,11 @@ common_inst() {
 
 pyadb_inst() {
     echo -e "Installing Python ADB..."
-    git clone "https://github.com/google/python-adb" ${basepath}/bin/common/pyadb
+    git clone "https://github.com/HikariCalyx/python-adb" ${basepath}/bin/common/pyadb
     pip3 install -r requirements.txt
     cd ${basepath}/bin/common/pyadb/
 # Bugfix Part
-    sed -i "s|source_file = open(source_file)|source_file = open(source_file, mode='rb')|g" adb/fastboot.py
+#    sed -i "s|source_file = open(source_file)|source_file = open(source_file, mode='rb')|g" adb/fastboot.py
     python3 setup.py install
     cd ${basepath}
     type pyfastboot >/dev/null 2>&1
