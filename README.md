@@ -22,7 +22,7 @@ Following image is an example of service permission granting fails if a wrong uu
 
 ## Get Started for Bootloader Unlock Service under Linux
 
-- [Request Bootloader Unlock from our website.](https://hikaricalyx.com/product/nokia-direct-ubl-service/)
+- [Request Bootloader Unlock from our website.](https://hikaricalyx.com/request-bootloader-unlock/)
 
 > If you provide wrong info during request, please contact us immediately.
 
@@ -52,7 +52,7 @@ python3 checkOrder.py --uu4hash 1234 --mode check
 
 This will check if your phone has been recorded properly on our website, if yes it will return like this. ```orderStatus``` must be ```processing``` to allow you proceed to bootloader procedure.
 ```
-{'orderNumber': 'HCT-5555', 'orderStatus': 'processing'}
+{'orderNumber': 'HCT-Fxxxxxxxxxxxxxx', 'orderStatus': 'processing'}
 ```
 
 
