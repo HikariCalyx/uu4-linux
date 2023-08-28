@@ -237,7 +237,7 @@ if secVer == '0001':
     if blType == 'service':
         prjCode = device.Oem('getProjectCode').decode('utf8')
         digestChallenge = device.Oem('getUID').decode('utf8').replace('\n','').replace('\r','')
-        servType = 'v'
+        servType = 'u'
         displayInformation4('1', servType, prjCode, psn, digestChallenge)
         processResult = getSignature4(servType, prjCode, psn, digestChallenge)
 elif secVer == '0004':
