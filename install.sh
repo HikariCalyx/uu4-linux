@@ -1,6 +1,6 @@
 #!/bin/bash
 # HCTSW Care UU4 Prerequisites Installer
-# 2015-2022 (C) Hikari Calyx Tech. All Rights Reserved.
+# 2015-2023 (C) Hikari Calyx Tech. All Rights Reserved.
 
 # Chinese users who cannot access Github or Pypi properly should do following changes:
 # 1. Replace "github.com" into "hub.fastgit.xyz" for faster Github Access. 
@@ -32,10 +32,21 @@ distro_check() {
     fi
 }
 
+python_minor_version_check() {
+    py3version = $(python -c 'import sys; print(sys.version_info[1])')
+    if [[ ${py3version} >= 11 ]]; then
+        echo -e "WARNING: Python 3.${py3version} is detected! "
+        echo -e "This version contains breaking change which will make the tool fail to work. "
+        echo -e "Downgrade to Python 3.7 - 3.10 is required. Depends on your Distro the procedure could be different. "
+        echo -e "You may want to execute this script again after you finish switching default python3 version to"
+        echo -e "3.10 or older. Then you won't see this warning again."
+    fi
+}
+
 debian_inst() {
     echo -e "Debian-based distro detected. Installing prerequisites..."
     apt update
-    apt -y install wget python3 git libusb-1.0-0 build-essential libssl-dev swig python3-pip python3-dev p7zip openssl unzip gawk sed uuid jq curl
+    apt -y install wget git libusb-1.0-0 build-essential libssl-dev swig python3-pip python3-dev p7zip openssl unzip gawk sed uuid jq curl
     if [[ "armhf,arm64.aarch64,i686,i486,i386" =~ "$processor_architecture" ]]; then
         apt -y install android-sdk-platform-tools
     fi
@@ -44,7 +55,7 @@ debian_inst() {
 redhat_old_inst() {
     echo -e "Redhat-based distro detected. Installing prerequisites..."
     yum update
-    yum -y install wget python3 git libusb make automake gcc gcc-c++ kernel-devel openssl-devel swig python3-pip python3-devel p7zip openssl unzip gawk sed uuid jq curl
+    yum -y install wget python39 git libusb make automake gcc gcc-c++ kernel-devel openssl-devel swig python39-pip python39-devel p7zip openssl unzip gawk sed uuid jq curl
     if [[ "armhf,arm64.aarch64,i686,i486,i386" =~ "$processor_architecture" ]]; then
         yum -y install android-sdk-platform-tools
     fi
@@ -53,7 +64,7 @@ redhat_old_inst() {
 redhat_new_inst() {
     echo -e "Redhat-based distro detected. Installing prerequisites..."
     dnf update
-    dnf -y install wget python3 git libusb-1 make automake gcc gcc-c++ kernel-devel openssl-devel swig python3-pip python3-devel p7zip openssl unzip gawk sed uuid jq curl
+    dnf -y install wget python39 git libusb-1 make automake gcc gcc-c++ kernel-devel openssl-devel swig python39-pip python39-devel p7zip openssl unzip gawk sed uuid jq curl
     if [[ "armhf,arm64.aarch64,i686,i486,i386" =~ "$processor_architecture" ]]; then
         dnf -y install android-tools
     fi
@@ -69,7 +80,7 @@ arch_inst() {
 
 suse_inst() {
     echo -e "SUSE-based distro detected. Installing prerequisites..."
-    zypper -y install dnf -y install wget python3 git libusb gcc gcc-c++ kernel-devel libopenssl-devel swig python3-pip python3-devel p7zip openssl unzip gawk sed uuid jq curl
+    zypper -y install dnf -y install wget python39 git libusb gcc gcc-c++ kernel-devel libopenssl-devel swig python39-pip python39-devel p7zip openssl unzip gawk sed uuid jq curl
     if [[ "armhf,arm64.aarch64,i686,i486,i386" =~ "$processor_architecture" ]]; then
         zypper -y install android-tools
     fi
@@ -156,9 +167,10 @@ prereq_confirm() {
 }
 
 echo -e "HCTSW Care Unlock Utility 4 for UNIX Prerequisites Installer"
-echo -e "2015-2022 (C) Hikari Calyx Tech. All Rights Reserved."
+echo -e "2015-2023 (C) Hikari Calyx Tech. All Rights Reserved."
 echo -e ""
 sucheck
+python_minor_version_check
 echo -e "This script will install prerequisites required by HCTSW Care UU4. "
 prereq_confirm
 distro_check
