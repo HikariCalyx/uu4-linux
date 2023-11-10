@@ -33,13 +33,13 @@ distro_check() {
 }
 
 python_minor_version_check() {
-    py3version = $(python -c 'import sys; print(sys.version_info[1])')
-    if [[ ${py3version} >= 11 ]]; then
+    py3version=$(python -c 'import sys; print(sys.version_info[1])')
+    if [[ ${py3version} -ge 11 ]]; then
         echo -e "WARNING: Python 3.${py3version} is detected! "
         echo -e "This version contains breaking change which will make the tool fail to work. "
         echo -e "Downgrade to Python 3.7 - 3.10 is required. Depends on your Distro the procedure could be different. "
-        echo -e "You may want to execute this script again after you finish switching default python3 version to"
-        echo -e "3.10 or older. Then you won't see this warning again."
+        echo -e "You may want to install pyenv and install Python-ADB manually with Python 3.10 environment or older. "
+        ispy311=true
     fi
 }
 
@@ -117,18 +117,19 @@ common_inst() {
 
 pyadb_inst() {
     echo -e "Installing Python ADB..."
-    git clone "https://github.com/HikariCalyx/python-adb" ${basepath}/bin/common/pyadb
     pip3 install -r requirements.txt
-    cd ${basepath}/bin/common/pyadb/
-# Bugfix Part
-#    sed -i "s|source_file = open(source_file)|source_file = open(source_file, mode='rb')|g" adb/fastboot.py
-    python3 setup.py install
-    cd ${basepath}
     type pyfastboot >/dev/null 2>&1
     if [[ "$?" == "1" ]]; then
         echo -e "WARNING: Python-ADB is installed but cannot be used yet. Please add following path into PATH variable: "
         echo -e "~/.local/bin"
     fi
+}
+
+pyenv_prompt() {
+    echo -e "Once you have pyenv installed, please switch to your desired version with this command (3.9.13 for example):"
+    echo -e "pyenv shell 3.9.13"
+    echo -e "Then, install requirements with this command: "
+    echo -e "pip install -r requirements.txt"
 }
 
 sucheck() {
@@ -176,7 +177,7 @@ prereq_confirm
 distro_check
 ${flavor}_inst
 common_inst
-pyadb_inst
+if [ ${ispy311} ]; then pyenv_prompt; else pyadb_inst; fi
 echo -e ""
 echo -e "All done! Enjoy it."
 echo -e ""
