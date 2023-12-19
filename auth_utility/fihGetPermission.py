@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 # HCTSW Care Unlock Utility 4 for Linux - Python Service Permission Granting Program
-# 2015-2022 (C) Hikari Calyx Tech. All Rights Reserved.
-# Version: 1.0.220812-1236
+# 2015-2024 (C) Hikari Calyx Tech. All Rights Reserved.
+# Version: 1.1.231219-2049
 
 import os
 import sys
-import re
 import base64
 import requests
 import json
@@ -29,6 +28,8 @@ sec9_url = '/uu4/v3/GetSignature9'
 # File Path Definition
 if sys.platform.startswith('win32'):
     credPath = os.getenv('systemdrive') + '/Temp/'
+    if not os.path.exists(credPath):
+        os.makedirs(credPath)
 elif sys.platform.startswith('darwin'):
     credPath = os.getenv('TMPDIR') + '/ostremote/'
     os_lang = os.getenv('LANG')
@@ -51,7 +52,7 @@ args = parser.parse_args()
 uu4_main_checksum = args.uu4hash
 
 # Request Header
-req_header = {'Content-Type': 'application/json', 'User-Agent': 'HCTSW-UU4-LINUX-' + uu4_main_checksum[0:4] + self_checksum[0:4] + '/1.0'}
+req_header = {'Content-Type': 'application/json', 'User-Agent': 'HCTSW-UU4-PYTHON-' + uu4_main_checksum[0:4] + self_checksum[0:4] + '/1.0'}
 
 # Convert hex digest into base64
 def digestToB64(digest):
@@ -234,6 +235,7 @@ if secVer == '0001':
     if blType == 'commercial':
         digestChallenge = hashlib.new('md5', psnBin).hexdigest()
         device.Oem('dm-verity ' + digestChallenge)
+        processResult = ['0']
     if blType == 'service':
         prjCode = device.Oem('getProjectCode').decode('utf8')
         digestChallenge = device.Oem('getUID').decode('utf8').replace('\n','').replace('\r','')
