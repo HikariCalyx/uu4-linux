@@ -32,17 +32,6 @@ distro_check() {
     fi
 }
 
-python_minor_version_check() {
-    py3version=$(python -c 'import sys; print(sys.version_info[1])')
-    if [[ ${py3version} -ge 11 ]]; then
-        echo -e "WARNING: Python 3.${py3version} is detected! "
-        echo -e "This version contains breaking change which will make the tool fail to work. "
-        echo -e "Downgrade to Python 3.7 - 3.10 is required. Depends on your Distro the procedure could be different. "
-        echo -e "You may want to install pyenv and install Python-ADB manually with Python 3.10 environment or older. "
-        ispy311=true
-    fi
-}
-
 debian_inst() {
     echo -e "Debian-based distro detected. Installing prerequisites..."
     apt update
@@ -125,13 +114,6 @@ pyadb_inst() {
     fi
 }
 
-pyenv_prompt() {
-    echo -e "Once you have pyenv installed, please switch to your desired version with this command (3.9.13 for example):"
-    echo -e "pyenv shell 3.9.13"
-    echo -e "Then, install requirements with this command: "
-    echo -e "pip install -r requirements.txt"
-}
-
 sucheck() {
     if [[ ! "$(whoami)" == "root" ]]; then
         echo -e "Please run this script with sudo or root account! "
@@ -168,16 +150,15 @@ prereq_confirm() {
 }
 
 echo -e "HCTSW Care Unlock Utility 4 for UNIX Prerequisites Installer"
-echo -e "2015-2023 (C) Hikari Calyx Tech. All Rights Reserved."
+echo -e "2015-2024 (C) Hikari Calyx Tech. All Rights Reserved."
 echo -e ""
 sucheck
-python_minor_version_check
 echo -e "This script will install prerequisites required by HCTSW Care UU4. "
 prereq_confirm
 distro_check
 ${flavor}_inst
 common_inst
-if [ ${ispy311} ]; then pyenv_prompt; else pyadb_inst; fi
+pyadb_inst
 echo -e ""
 echo -e "All done! Enjoy it."
 echo -e ""
