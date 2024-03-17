@@ -10,7 +10,7 @@ import requests
 import json
 import argparse
 import hashlib
-from adb import fastboot
+from pyfastboot import fastboot
 
 # Self-Checksum
 comppath = os.path.abspath(__file__)
