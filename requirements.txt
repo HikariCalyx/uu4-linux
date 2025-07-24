@@ -1,4 +1,4 @@
 requests
 cryptography
 libusb1
-git+https://github.com/HikariCalyx/python-adb
+pyfastboot
