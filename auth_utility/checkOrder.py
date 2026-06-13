@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # HCTSW Care Unlock Utility 4 for Linux - Python Order Check
 # 2015-2022 (C) Hikari Calyx Tech. All Rights Reserved.
-# Version: 1.0.220709-1544
+# Version: 1.0.260613-2107
 
 import os
 import sys
@@ -9,7 +9,7 @@ import requests
 import json
 import argparse
 import hashlib
-from adb import fastboot
+from pyfastboot import fastboot
 
 paymentStatusCode = {
     'processing': 0,
